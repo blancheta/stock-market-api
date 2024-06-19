@@ -1,4 +1,4 @@
-from utils.Order import Order
+from app.order.utils.Order import Order
 
 
 class TestOrderUtil:
