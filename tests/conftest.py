@@ -41,4 +41,4 @@ def new_user():
         db.session.add(User(name="111"))
         db.session.commit()
 
-        return db.session.query(User).first()
+        return db.session.query(User).filter_by(name="111").first()
