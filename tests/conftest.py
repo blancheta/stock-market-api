@@ -1,25 +1,44 @@
+import os
+from contextlib import contextmanager
+
 import pytest
+from flask_sqlalchemy import SQLAlchemy
+
 from app import create_app
+from app.order.models import User, db
+from config import TestingConfig
 
-@pytest.fixture()
-def app():
-    app = create_app()
-    app.config.update({
-        "TESTING": True,
-    })
 
-    # other setup can go here
+def app_mock():
+    return create_app(TestingConfig)
 
-    yield app
+
+@pytest.fixture(autouse=True)
+def db_drop():
+    # execute the test
+    yield
 
     # clean up / reset resources here
+    with app_mock().app_context():
+        db.session.remove()
+        db.drop_all()
+        os.remove("app-test.db")
 
 
 @pytest.fixture()
-def client(app):
-    return app.test_client()
+def client():
+    return app_mock().test_client()
 
 
 @pytest.fixture()
-def runner(app):
-    return app.test_cli_runner()
+def runner():
+    return app_mock().test_cli_runner()
+
+
+@pytest.fixture()
+def new_user():
+    with app_mock().app_context():
+        db.session.add(User(name="111"))
+        db.session.commit()
+
+        return db.session.query(User).first()
