@@ -1,8 +1,5 @@
 import os
-from contextlib import contextmanager
-
 import pytest
-from flask_sqlalchemy import SQLAlchemy
 
 from app import create_app
 from app.order.models import User, db
@@ -13,8 +10,16 @@ def app_mock():
     return create_app(TestingConfig)
 
 
+@pytest.fixture(scope="class")
+def drop_db():
+    yield
+
+    with app_mock().app_context():
+        os.remove("app-test.db")
+
+
 @pytest.fixture(autouse=True)
-def db_drop():
+def drop_data():
     # execute the test
     yield
 
@@ -22,7 +27,6 @@ def db_drop():
     with app_mock().app_context():
         db.session.remove()
         db.drop_all()
-        os.remove("app-test.db")
 
 
 @pytest.fixture()
