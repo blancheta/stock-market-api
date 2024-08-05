@@ -1,7 +1,4 @@
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Column, Integer, String
-from sqlalchemy.orm import DeclarativeBase
 
 from app.order.models import db
 from config import Config
