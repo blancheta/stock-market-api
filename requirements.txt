@@ -10,3 +10,4 @@ packaging==24.1
 SQLAlchemy==2.0.31
 typing_extensions==4.12.2
 Werkzeug==3.0.3
+psycopg2-binary==2.9.9
