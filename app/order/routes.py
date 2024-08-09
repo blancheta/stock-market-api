@@ -8,7 +8,7 @@ def index():
 
 
 @bp.route('/users')
-def index():
+def users():
     users = User.query.all()
 
     response_json = [
