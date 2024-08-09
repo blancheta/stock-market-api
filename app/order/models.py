@@ -10,7 +10,7 @@ class Base(DeclarativeBase):
 db = SQLAlchemy(model_class=Base)
 
 
-class User(Base):
+class User(db.Model):
     __tablename__ = "user"
 
     id = Column(Integer(), primary_key=True, autoincrement=True)
