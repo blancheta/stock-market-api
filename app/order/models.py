@@ -1,13 +1,8 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import String, Column, Integer
-from sqlalchemy.orm import DeclarativeBase
 
 
-class Base(DeclarativeBase):
-    pass
-
-
-db = SQLAlchemy(model_class=Base)
+db = SQLAlchemy()
 
 
 class User(db.Model):
